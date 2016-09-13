@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.FindHotestDao">
+
+
+
+<select id="findHotest" resultType="com.somemall.entity.Item">
+SELECT b.displayname,b.itemid,b.itemname,sum(a.amount) AS total,b.image from mall_orderitem AS a 
+left join mall_item as b on a.itemid=b.itemid where b.isdel='0' 
+GROUP BY a.itemid order by total DESC limit 0,6
+</select>
+
+<select id="findMostSold" resultType="com.somemall.entity.Item">
+SELECT b.displayname,b.itemid,b.itemname,sum(a.amount) AS total,b.image from mall_orderitem AS a 
+left join mall_item as b on a.itemid=b.itemid where b.isdel='0' 
+GROUP BY a.itemid order by total DESC limit 0,6
+</select>
+
+<select id="findhotcollect" resultType="com.somemall.entity.Item">
+select b.displayname,b.itemid,b.itemname,b.image,count(a.itemid) AS count from mall_collect as a 
+left join mall_item as b on a.itemid=b.itemid where b.isdel='0' 
+group by a.itemid order by count DESC limit 0,6
+</select>
+
+<select id="findhotcomment" resultType="com.somemall.entity.Item">
+
+</select>
+
+<select id="findnewitem" resultType="com.somemall.entity.Item">
+SELECT  displayname,itemid,itemname,image FROM mall_item ORDER BY itemid DESC LIMIT 0,6
+</select>
+
+</mapper>

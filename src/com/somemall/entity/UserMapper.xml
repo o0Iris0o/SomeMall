@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.UserDao">
+	<select id="findByUserid" parameterType="java.lang.Integer"
+		resultType="com.somemall.entity.User">
+		SELECT * FROM mall_user
+		WHERE userid=#{userid} and isdel='0'
+	</select>
+	<select id="findUserByEmail"
+		resultType="com.somemall.entity.User">
+		SELECT * FROM mall_user
+		WHERE email=#{0} and isdel='0'
+	</select>
+	<select id="findUserByUsername"
+		resultType="com.somemall.entity.User">
+		SELECT * FROM mall_user
+		WHERE username=#{0} and isdel='0'
+	</select>
+	<select id="findByUsernameAndPassword" resultType="com.somemall.entity.User">
+		SELECT * FROM mall_user
+		WHERE username=#{0} and password=#{1} and isdel='0'
+	</select>
+	<insert id="addUser">
+		INSERT INTO mall_user(username,password,email) VALUES(#{0},#{1},#{2})
+	</insert>
+	<insert id="addUserInitAddr">
+		INSERT INTO mall_addr(userid,receivername,phone,isdef) VALUES(#{0},#{1},#{2},'1')
+	</insert>
+	
+	<update id="updateUserNameByID">
+		UPDATE mall_user SET username=#{0} WHERE userid=#{1}
+	</update>
+	
+	<update id="updateEmail">
+		UPDATE mall_user SET email=#{1} WHERE userid=#{0}
+	</update>
+	<update id="updateUserPwd">
+		UPDATE mall_user SET password=#{1} WHERE userid=#{0}
+	</update>
+	
+</mapper>

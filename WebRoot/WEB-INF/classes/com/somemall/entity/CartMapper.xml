@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.CartDao">
+
+
+
+<select id="findCartItemByUserID" resultType="com.somemall.entity.CartItem">
+SELECT b.itemid,b.itemname,b.price,a.amount,b.image FROM mall_cart AS a LEFT JOIN mall_item AS b ON a.itemid=b.itemid WHERE a.userid=#{0} AND a.isdel='0' ORDER BY a.cartid DESC
+</select>
+
+<select id="findCartItemByItemID" resultType="com.somemall.entity.CartItem">
+SELECT * FROM mall_cart WHERE userid=#{0} AND itemid=#{1} AND isdel='0'
+</select>
+
+<insert id="addToCart">
+	INSERT INTO mall_cart(itemid,amount,userid,isdel)VALUES(#{0},1,#{1},'0')
+</insert>
+
+<update id="updateCartItemAmount">
+	UPDATE mall_cart SET amount=amount+1 WHERE userid=#{0} and itemid=#{1} AND isdel='0'
+</update>
+
+<select id="findCartExist" resultType="java.lang.Integer">
+	SELECT COUNT(*) FROM mall_cart WHERE userid=#{0} AND itemid=#{1} AND isdel='0'
+</select>
+
+<update id="deleCartItem">
+	UPDATE mall_cart SET isdel='1' WHERE userid=#{0} and itemid=#{1} AND isdel='0'
+</update>
+
+<update id="changCartItemAmount">
+	UPDATE mall_cart SET amount=#{2} WHERE userid=#{0} and itemid=#{1} AND isdel='0'
+</update>
+
+
+
+</mapper>

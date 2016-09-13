@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.CollectDao">
+	<select id="findCollectByUserid" resultType="com.somemall.entity.Collect">
+		SELECT a.collectid,a.userid, a.itemid,b.itemname,b.image,b.catid,c.catname,b.price,b.displayname FROM mall_collect AS a 
+		left join mall_item AS b ON a.itemid=b.itemid
+		left join mall_itemcat AS c ON b.catid=c.catid where a.userid=#{0} and a.isdel='0'
+	</select>
+	<select id="findItemByPage" resultType="com.somemall.entity.Collect">
+		SELECT a.collectid,a.userid, a.itemid,b.itemname,b.image,b.catid,c.catname,b.price,b.displayname FROM mall_collect AS a 
+		left join mall_item AS b ON a.itemid=b.itemid
+		left join mall_itemcat AS c ON b.catid=c.catid WHERE a.userid=#{userid} and a.isdel='0'
+		LIMIT #{page.startCount}, #{page.pageSize}
+	</select>
+	<update id="delCollect">
+		UPDATE mall_collect SET isdel = '1' WHERE collectid =#{0}
+	</update>
+	<insert id="addToCollect">
+		INSERT mall_collect(itemid,userid) VALUES(#{0},#{1})
+	</insert>
+	<select id="findCollect" resultType="com.somemall.entity.Collect">
+		SELECT * FROM mall_collect WHERE itemid=#{0} and userid=#{1} and isdel='0'
+	</select>
+	<select id="findItemByItemnameAndPage" resultType="com.somemall.entity.Collect">
+		SELECT a.collectid,a.userid, a.itemid,b.itemname,b.image,b.catid,c.catname,b.price,b.displayname FROM mall_collect AS a 
+		left join mall_item AS b ON a.itemid=b.itemid
+		left join mall_itemcat AS c ON b.catid=c.catid 
+		WHERE itemname like CONCAT(CONCAT('%',#{searchContext}),'%') and a.userid=#{userid} and a.isdel='0'
+		LIMIT #{page.startCount}, #{page.pageSize}
+	</select>
+	<select id="findItemByItemname" resultType="com.somemall.entity.Collect">
+		SELECT a.collectid,a.userid, a.itemid,b.itemname,b.image,b.catid,c.catname,b.price,b.displayname FROM mall_collect AS a 
+		left join mall_item AS b ON a.itemid=b.itemid
+		left join mall_itemcat AS c ON b.catid=c.catid 
+		WHERE itemname like CONCAT(CONCAT('%',#{searchContext}),'%') and a.userid=#{userid} and a.isdel='0'
+	</select>
+</mapper>

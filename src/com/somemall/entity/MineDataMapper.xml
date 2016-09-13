@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.GenerateUserLogDao">
+	
+	<select id="mineFromOrder" resultType="com.somemall.entity.UserOperateLog">
+		SELECT userid,itemid FROM mall_orderitem group by itemid
+	</select>
+	
+</mapper>

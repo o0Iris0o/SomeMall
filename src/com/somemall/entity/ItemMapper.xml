@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.ItemDao">
+	<select id="findItemByItemname" resultType="com.somemall.entity.Item">
+		SELECT a.itemid,a.itemname,a.catid,b.catname,a.price,a.num,a.status,a.datajson,a.sellpoint,a.image,a.itemdescrip,a.isdel,a.displayname
+		FROM mall_item AS a LEFT JOIN mall_itemcat as b ON a.catid = b.catid
+		WHERE itemname like CONCAT(CONCAT('%',#{0}),'%') and a.isdel='0'
+	</select>
+	<select id="findItemByItemid" resultType="com.somemall.entity.Item">
+		SELECT a.itemid,a.itemname,a.catid,b.catname,a.price,a.num,a.status,a.datajson,a.sellpoint,a.image,a.itemdescrip,a.isdel,a.displayname
+		FROM mall_item AS a LEFT JOIN mall_itemcat AS b ON a.catid = b.catid
+		WHERE itemid=#{0} and a.isdel='0'
+	</select>
+	<select id="findItemByItemnameAndPage" resultType="com.somemall.entity.Item">
+		SELECT a.itemid,a.itemname,a.catid,b.catname,a.price,a.num,a.status,a.datajson,a.sellpoint,a.image,a.itemdescrip,a.isdel,a.displayname
+		FROM mall_item AS a LEFT JOIN mall_itemcat as b ON a.catid = b.catid
+		WHERE itemname like CONCAT(CONCAT('%',#{searchContext}),'%') and a.isdel='0' 
+		LIMIT #{page.startCount}, #{page.pageSize}
+	</select>
+</mapper>

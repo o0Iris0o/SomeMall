@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.somemall.dao.OrderDao">
+
+
+
+<insert id="createOrder">
+	INSERT INTO 
+	mall_order(ordershowid,userid,ordertotalprice,addrid,orderdate)
+	VALUES (#{0},#{1},#{2},#{3},#{4})
+</insert>
+
+<select id="findDefaultAddrIDByUserID" resultType="java.lang.Integer">
+SELECT addrid FROM mall_addr WHERE userid=#{0} and isdef=1
+</select>
+
+<select id="findNewestID" resultType="java.lang.Integer">
+SELECT orderid FROM mall_order ORDER BY orderid DESC LIMIT 0,1
+</select>
+
+<insert id="insertOrderItem">
+INSERT INTO mall_orderitem(itemid,itemname,displayname,price,amount,itemtotalprice,orderid,userid)
+ VALUES (#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7})
+</insert>
+
+<update id="updateTotalprice">
+	UPDATE mall_order SET ordertotalprice=#{0} WHERE orderid=#{1}
+</update>
+
+</mapper>
